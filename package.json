@@ -5,7 +5,10 @@
   "name": "maps",
   "version": "1.0.0",
   "main": "index.html",
-  "dependencies": {},
+  "dependencies": {
+    "@types/faker": "^5.5.9",
+    "faker": "^5.5.3"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
