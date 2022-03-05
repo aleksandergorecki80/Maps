@@ -136901,8 +136901,86 @@ var User = /*#__PURE__*/_createClass(function User() {
 });
 
 exports.User = User;
-},{"faker":"node_modules/faker/index.js"}],"src/index.ts":[function(require,module,exports) {
+},{"faker":"node_modules/faker/index.js"}],"src/Company.ts":[function(require,module,exports) {
 "use strict";
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var __importDefault = this && this.__importDefault || function (mod) {
+  return mod && mod.__esModule ? mod : {
+    "default": mod
+  };
+};
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Company = void 0;
+
+var faker_1 = __importDefault(require("faker"));
+
+var Company = /*#__PURE__*/_createClass(function Company() {
+  _classCallCheck(this, Company);
+
+  this.companyName = faker_1.default.company.companyName();
+  this.catchPhrase = faker_1.default.company.catchPhrase();
+  this.location = {
+    lat: parseFloat(faker_1.default.address.latitude()),
+    lng: parseFloat(faker_1.default.address.longitude())
+  };
+});
+
+exports.Company = Company;
+},{"faker":"node_modules/faker/index.js"}],"src/CustomMap.ts":[function(require,module,exports) {
+"use strict";
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
+
+function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.CustomMap = void 0;
+
+var CustomMap = /*#__PURE__*/function () {
+  function CustomMap(id) {
+    _classCallCheck(this, CustomMap);
+
+    this.googleMap = new google.maps.Map(document.getElementById(id), {
+      zoom: 1,
+      center: {
+        lat: 0,
+        lng: 0
+      }
+    });
+  }
+
+  _createClass(CustomMap, [{
+    key: "addMarker",
+    value: function addMarker(mappable) {
+      new google.maps.Marker({
+        map: this.googleMap,
+        position: {
+          lat: mappable.location.lat,
+          lng: mappable.location.lng
+        }
+      });
+    }
+  }]);
+
+  return CustomMap;
+}();
+
+exports.CustomMap = CustomMap;
+},{}],"src/index.ts":[function(require,module,exports) {
+"use strict"; /// <reference types="@types/google.maps" />
 
 Object.defineProperty(exports, "__esModule", {
   value: true
@@ -136910,9 +136988,18 @@ Object.defineProperty(exports, "__esModule", {
 
 var User_1 = require("./User");
 
+var Company_1 = require("./Company");
+
+var CustomMap_1 = require("./CustomMap");
+
 var user = new User_1.User();
+var company = new Company_1.Company();
+var customMap = new CustomMap_1.CustomMap('map');
+customMap.addMarker(user);
+customMap.addMarker(company);
 console.log(user);
-},{"./User":"src/User.ts"}],"C:/Users/Aleksander/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+console.log(company);
+},{"./User":"src/User.ts","./Company":"src/Company.ts","./CustomMap":"src/CustomMap.ts"}],"C:/Users/Aleksander/AppData/Roaming/npm/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -136940,7 +137027,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "49546" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "61353" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
