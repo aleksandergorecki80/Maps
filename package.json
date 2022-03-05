@@ -1,0 +1,15 @@
+{
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  },
+  "name": "maps",
+  "version": "1.0.0",
+  "main": "index.html",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
