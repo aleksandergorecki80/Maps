@@ -136871,11 +136871,11 @@ module['exports'] = faker;
 },{"./lib":"node_modules/faker/lib/index.js","./lib/locales":"node_modules/faker/lib/locales.js"}],"src/User.ts":[function(require,module,exports) {
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -136890,25 +136890,36 @@ exports.User = void 0;
 
 var faker_1 = __importDefault(require("faker"));
 
-var User = /*#__PURE__*/_createClass(function User() {
-  _classCallCheck(this, User);
+var User = /*#__PURE__*/function () {
+  function User() {
+    _classCallCheck(this, User);
 
-  this.name = faker_1.default.name.firstName();
-  this.location = {
-    lat: parseFloat(faker_1.default.address.latitude()),
-    lng: parseFloat(faker_1.default.address.longitude())
-  };
-});
+    this.name = faker_1.default.name.firstName();
+    this.location = {
+      lat: parseFloat(faker_1.default.address.latitude()),
+      lng: parseFloat(faker_1.default.address.longitude())
+    };
+  }
+
+  _createClass(User, [{
+    key: "markerContent",
+    value: function markerContent() {
+      return "User name: ".concat(this.name, ".\n            Location: ").concat(this.location.lat, " - ").concat(this.location.lng);
+    }
+  }]);
+
+  return User;
+}();
 
 exports.User = User;
 },{"faker":"node_modules/faker/index.js"}],"src/Company.ts":[function(require,module,exports) {
 "use strict";
 
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
 function _defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } }
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var __importDefault = this && this.__importDefault || function (mod) {
   return mod && mod.__esModule ? mod : {
@@ -136923,20 +136934,32 @@ exports.Company = void 0;
 
 var faker_1 = __importDefault(require("faker"));
 
-var Company = /*#__PURE__*/_createClass(function Company() {
-  _classCallCheck(this, Company);
+var Company = /*#__PURE__*/function () {
+  function Company() {
+    _classCallCheck(this, Company);
 
-  this.companyName = faker_1.default.company.companyName();
-  this.catchPhrase = faker_1.default.company.catchPhrase();
-  this.location = {
-    lat: parseFloat(faker_1.default.address.latitude()),
-    lng: parseFloat(faker_1.default.address.longitude())
-  };
-});
+    this.companyName = faker_1.default.company.companyName();
+    this.catchPhrase = faker_1.default.company.catchPhrase();
+    this.location = {
+      lat: parseFloat(faker_1.default.address.latitude()),
+      lng: parseFloat(faker_1.default.address.longitude())
+    };
+  }
+
+  _createClass(Company, [{
+    key: "markerContent",
+    value: function markerContent() {
+      return "<p>Company name: ".concat(this.companyName, ".</p>\n            Catch phrase: <i>").concat(this.catchPhrase, ".</i>\n            Location: ").concat(this.location.lat, " - ").concat(this.location.lng);
+    }
+  }]);
+
+  return Company;
+}();
 
 exports.Company = Company;
 },{"faker":"node_modules/faker/index.js"}],"src/CustomMap.ts":[function(require,module,exports) {
-"use strict";
+"use strict"; // Instruction to any other class
+// how to be an argument to 'adMark'
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -136965,12 +136988,20 @@ var CustomMap = /*#__PURE__*/function () {
   _createClass(CustomMap, [{
     key: "addMarker",
     value: function addMarker(mappable) {
-      new google.maps.Marker({
+      var _this = this;
+
+      var marker = new google.maps.Marker({
         map: this.googleMap,
         position: {
           lat: mappable.location.lat,
           lng: mappable.location.lng
         }
+      });
+      marker.addListener('click', function () {
+        var infoWindow = new google.maps.InfoWindow({
+          content: mappable.markerContent()
+        });
+        infoWindow.open(_this.googleMap, marker);
       });
     }
   }]);
